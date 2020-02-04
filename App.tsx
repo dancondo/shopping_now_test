@@ -8,11 +8,14 @@ import { AuthScreen } from './src/screens/auth';
 const App = createAppContainer(
   createStackNavigator({
     Home: {
-      screen: HomeScreen
+      screen: HomeScreen,
     },
     Auth: {
       screen: AuthScreen
-    } 
+    }
+  },
+  {
+    initialRouteName: AuthScreen.routeName
   })
 );
 
