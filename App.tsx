@@ -1,21 +1,20 @@
-import React, {Fragment} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-} from 'react-native';
+import 'react-native-gesture-handler';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { HomeScreen } from './src/screens/home';
+import { enableScreens } from 'react-native-screens';
+import { AuthScreen } from './src/screens/auth';
 
-const App = () => {
-  return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-      </SafeAreaView>
-    </Fragment>
-  );
-};
+const App = createAppContainer(
+  createStackNavigator({
+    Home: {
+      screen: HomeScreen
+    },
+    Auth: {
+      screen: AuthScreen
+    } 
+  })
+);
 
-const styles = StyleSheet.create({
-});
-
+enableScreens();
 export default App;
