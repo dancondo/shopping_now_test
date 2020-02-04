@@ -1,13 +1,22 @@
 import React from 'react';
-import { SafeAreaView, Text } from "react-native";
+import { Container, Header, Content, Form, Item, Input } from 'native-base';
+import { ProfileForm } from '../components/profile-form';
 
 export class AuthScreen extends React.Component {
+  static routeName = 'Auth'
+
+  static navigationOptions = {
+    headerShown: false 
+  }
+
   render() {
     return (
       <React.Fragment>
-        <SafeAreaView>
-          <Text>HOME SCREEN</Text>
-        </SafeAreaView>
+        <Container>
+          <ProfileForm
+            action="Cadastrar"
+          />
+        </Container>
       </React.Fragment>
     )
   }
