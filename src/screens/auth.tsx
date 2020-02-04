@@ -1,23 +1,54 @@
 import React from 'react';
-import { Container, Header, Content, Form, Item, Input } from 'native-base';
 import { ProfileForm } from '../components/profile-form';
+import { Button, ThemeProvider, Text, SocialIcon } from 'react-native-elements';
+import { styles } from '../assets/style';
+import { View } from 'react-native';
 
-export class AuthScreen extends React.Component {
+type AuthScrenState = {
+  isSignUp: boolean
+}
+
+export class AuthScreen extends React.Component<{}, AuthScrenState> {
   static routeName = 'Auth'
 
   static navigationOptions = {
     headerShown: false 
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSignUp: false
+    }
+  }
+
   render() {
     return (
-      <React.Fragment>
-        <Container>
+      <ThemeProvider>
+        <View
+          style={{ ...styles.container, backgroundColor: 'green' }}
+        >
+          <View
+            style={{ backgroundColor: 'orange', ...styles.banner }}
+          >
+            <Text>
+              {
+                this.state.isSignUp ? 'Crie sua Conta' : 'Que bom te ver aqui!'
+              }
+            </Text>
+          </View>
           <ProfileForm
             action="Cadastrar"
-          />
-        </Container>
-      </React.Fragment>
+          >
+            <SocialIcon
+              style={styles.marginVerticalMd}
+              type="facebook"
+              title="Continuar com Facebook"
+              button
+            />
+          </ProfileForm>
+        </View>
+      </ThemeProvider>
     )
   }
 }
