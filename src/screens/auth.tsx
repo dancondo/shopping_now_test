@@ -18,7 +18,7 @@ export class AuthScreen extends React.Component<{}, AuthScrenState> {
   constructor(props) {
     super(props);
     this.state = {
-      isSignUp: false
+      isSignUp: true
     }
   }
 
@@ -38,7 +38,8 @@ export class AuthScreen extends React.Component<{}, AuthScrenState> {
             </Text>
           </View>
           <ProfileForm
-            action="Cadastrar"
+            signUp={this.state.isSignUp}
+            changeAction={() => this.setState({ isSignUp: !this.state.isSignUp })}
           >
             <SocialIcon
               style={styles.marginVerticalMd}

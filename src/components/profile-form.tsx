@@ -5,7 +5,8 @@ import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 type ProfileFormProps = {
-  action: string,
+  signUp: boolean,
+  changeAction: () => void,
   firstName?: string,
   lastName?: string,
   email?: string,
@@ -32,16 +33,22 @@ export const ProfileForm = (props: ProfileFormProps) => {
       style={{ ...styles.stretchContainer, ...styles.justifyBetween}}
     >
       <View>
-        <Input
-          placeholder="Nome"
-          value={formik.values.firstName}
-          onChangeText={text => formik.setFieldValue('firstName', text)}
-        />
-        <Input
-          placeholder="Sobrenome"
-          value={formik.values.lastName}
-          onChangeText={text => formik.setFieldValue('lastName', text)}
-        />
+        {
+          props.signUp && (
+            <React.Fragment>
+              <Input
+                placeholder="Nome"
+                value={formik.values.firstName}
+                onChangeText={text => formik.setFieldValue('firstName', text)}
+              />
+              <Input
+                placeholder="Sobrenome"
+                value={formik.values.lastName}
+                onChangeText={text => formik.setFieldValue('lastName', text)}
+              />
+            </React.Fragment>
+          )
+        }
         <Input
           placeholder="Email"
           value={formik.values.email}
@@ -58,10 +65,17 @@ export const ProfileForm = (props: ProfileFormProps) => {
         <Button
           buttonStyle={styles.roundButton}
           containerStyle={{...styles.marginHorizontalMd, ...styles.marginVerticalMd}}
-          title={props.action}
+          title={props.signUp ? 'Cadastrar' : 'Login'}
           raised
         />
         { props.children && props.children }
+        <Button
+          type="clear"
+          title={props.signUp ? 'Já tenho uma conta' : 'Não tenho uma conta'}
+          onPress={props.changeAction}
+        >
+
+        </Button>
       </View>
     </View>
   )
