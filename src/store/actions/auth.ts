@@ -46,7 +46,7 @@ export const login = ({ email, password }) => {
     const data = await response.json();
     dispatch({
       type: AuthActions.login,
-      payload: data.body
+      payload: data
     })
   }
 }
