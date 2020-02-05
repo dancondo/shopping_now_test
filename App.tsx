@@ -5,15 +5,16 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { HomeScreen } from './src/screens/home';
 import { enableScreens } from 'react-native-screens';
 import { AuthScreen } from './src/screens/auth';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { authReducer } from './src/store/reducers/auth';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   auth: authReducer
 })
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const Navigation = createAppContainer(
   createStackNavigator({
