@@ -8,11 +8,13 @@ import { ProfileScreen } from './src/screens/profile';
 import { enableScreens } from 'react-native-screens';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { authReducer } from './src/store/reducers/auth';
+import { animesReducer } from './src/store/reducers/animes';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  animes: animesReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
