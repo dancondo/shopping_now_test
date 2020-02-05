@@ -1,15 +1,16 @@
 import React from 'react';
 import { SafeAreaView, Text } from "react-native";
+import { useSelector } from 'react-redux';
 
-export class HomeScreen extends React.Component {
-  static routeName = 'Home'
-  render() {
-    return (
-      <React.Fragment>
-        <SafeAreaView>
-          <Text>HOME SCREEN</Text>
-        </SafeAreaView>
-      </React.Fragment>
-    )
-  }
+export const HomeScreen = () => {
+  const routeName = 'Home'
+  const user = useSelector(state => state.auth.user);
+
+  return (
+    <React.Fragment>
+      <SafeAreaView>
+        <Text>{user.firstName}</Text>
+      </SafeAreaView>
+    </React.Fragment>
+  )
 }
