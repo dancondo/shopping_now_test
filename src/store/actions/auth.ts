@@ -11,7 +11,7 @@ export const signUp = ({ firstName, lastName, email, password }) => {
       `${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
-          'Contenty-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           email,
@@ -23,7 +23,8 @@ export const signUp = ({ firstName, lastName, email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.login
+      type: AuthActions.login,
+      payload: data
     })
   }
 }
@@ -44,7 +45,8 @@ export const login = ({ email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.login
+      type: AuthActions.login,
+      payload: data.body
     })
   }
 }
