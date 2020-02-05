@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProfileForm } from '../components/profile-form';
-import { Button, ThemeProvider, Text, SocialIcon } from 'react-native-elements';
+import { ThemeProvider, Text, SocialIcon } from 'react-native-elements';
 import { styles } from '../assets/style';
 import { View } from 'react-native';
 
