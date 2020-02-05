@@ -50,3 +50,7 @@ export const login = ({ email, password }) => {
     })
   }
 }
+
+export const update = ({}) => {
+  
+}
