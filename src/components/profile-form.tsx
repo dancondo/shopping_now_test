@@ -28,7 +28,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
       password: props.password ? props.firstName : ''
     },
     onSubmit: async values => {
-      await dispatch(authActions.signUp(values))
+      await dispatch(authActions[props.signUp ? 'signUp' : 'login'](values));
     }
   })
 

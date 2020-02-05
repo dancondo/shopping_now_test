@@ -2,7 +2,6 @@
 import { API_BASE_URL } from 'react-native-dotenv'
 
 export enum AuthActions {
-  signUp = 'SIGNUP',
   login = 'LOGIN'
 } 
 
@@ -24,7 +23,7 @@ export const signUp = ({ firstName, lastName, email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.signUp
+      type: AuthActions.login
     })
   }
 }
@@ -43,5 +42,9 @@ export const login = ({ email, password }) => {
         })
       }
     )
+    const data = await response.json();
+    dispatch({
+      type: AuthActions.login
+    })
   }
 }
