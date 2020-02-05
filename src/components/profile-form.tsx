@@ -3,23 +3,17 @@ import { useFormik } from 'formik';
 import { styles } from '../assets/style';
 import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
-import * as authActions from '../store/actions/auth';
 import { User } from '../interfaces/user.interface'
-import { useNavigation } from '../hooks/use-navigation';
 
 type ProfileFormProps = {
-  signUp: boolean,
-  changeAction: () => void,
+  showExtraFields: boolean
+  actionName: string,
+  onSubmit: (values) => void
   user?: User,
-  children?: ReactChild
+  children?: ReactChild[] | ReactChild
 }
 
 export const ProfileForm = (props: ProfileFormProps) => {
-
-  const dispatch = useDispatch()
-
-  const navigation = useNavigation();
 
   const formik = useFormik({
     initialValues: {
@@ -32,13 +26,9 @@ export const ProfileForm = (props: ProfileFormProps) => {
       if (props.user) {
         return
       }
-      await dispatch(authActions[props.signUp ? 'signUp' : 'login'](values));
-      navigation.navigate('Home');
+      await props.onSubmit(values);
     }
   })
-
-
-
 
   return (
     <View
@@ -46,7 +36,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     >
       <View>
         {
-          props.signUp && (
+          props.showExtraFields && (
             <React.Fragment>
               <Input
                 placeholder="Nome"
@@ -77,18 +67,11 @@ export const ProfileForm = (props: ProfileFormProps) => {
         <Button
           buttonStyle={styles.roundButton}
           containerStyle={{...styles.marginHorizontalMd, ...styles.marginVerticalMd}}
-          title={props.signUp ? 'Cadastrar' : 'Login'}
+          title={props.actionName}
           onPress={formik.submitForm}
           raised
         />
         { props.children && props.children }
-        <Button
-          type="clear"
-          title={props.signUp ? 'Já tenho uma conta' : 'Não tenho uma conta'}
-          onPress={props.changeAction}
-        >
-
-        </Button>
       </View>
     </View>
   )
