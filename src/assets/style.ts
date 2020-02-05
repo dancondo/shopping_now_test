@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 8,
+    padding: 7,
     flex: 1
   },
   marginVerticalMd: {
@@ -21,11 +21,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   banner: {
-    height: '33%',
+    minHeight: '30%',
     justifyContent: 'center',
     alignItems: 'center'
   },
   stretchContainer: {
+    minHeight: '50%',
     alignSelf: 'stretch',
     flex: 1,
     backgroundColor: 'blue'
