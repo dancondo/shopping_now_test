@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { HomeScreen } from './src/screens/home';
 import { enableScreens } from 'react-native-screens';
@@ -16,17 +16,22 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+const AuthNavigation = createStackNavigator({
+  Auth: {
+    screen: AuthScreen
+  }
+})
+
+const AppNavigation = createStackNavigator({
+  Home: {
+    screen: HomeScreen
+  }
+})
+
 const Navigation = createAppContainer(
-  createStackNavigator({
-    Home: {
-      screen: HomeScreen,
-    },
-    Auth: {
-      screen: AuthScreen
-    }
-  },
-  {
-    initialRouteName: AuthScreen.routeName
+  createSwitchNavigator({
+    Auth: AuthNavigation,
+    App: AppNavigation
   })
 );
 
