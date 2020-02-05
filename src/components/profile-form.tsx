@@ -5,14 +5,13 @@ import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
+import { User } from '../interfaces/user.interface'
+import { useNavigation } from '../hooks/use-navigation';
 
 type ProfileFormProps = {
   signUp: boolean,
   changeAction: () => void,
-  firstName?: string,
-  lastName?: string,
-  email?: string,
-  password?: string,
+  user?: User,
   children?: ReactChild
 }
 
@@ -20,15 +19,21 @@ export const ProfileForm = (props: ProfileFormProps) => {
 
   const dispatch = useDispatch()
 
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: {
-      firstName: props.firstName ? props.firstName : '',
-      lastName: props.lastName ? props.lastName : '',
-      email: props.email ? props.email : '',
-      password: props.password ? props.firstName : ''
+      firstName: props.user ? props.user.firstName : '',
+      lastName: props.user ? props.user.lastName : '',
+      email: props.user ? props.user.email : '',
+      password: props.user ? props.user.firstName : ''
     },
     onSubmit: async values => {
+      if (props.user) {
+        return
+      }
       await dispatch(authActions[props.signUp ? 'signUp' : 'login'](values));
+      navigation.navigate('Home');
     }
   })
 
