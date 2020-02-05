@@ -1,8 +1,18 @@
+import { AuthActions } from "../actions/auth";
+
 const initialState = {
-  _token: null,
-  _user: null
+  token: null,
+  user: null
 };
 
 export const authReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case AuthActions.login:
+      return {
+        token: action.payload.token,
+        user: action.payload.user
+      }
+      default:
+        return state;
+  }
 }
