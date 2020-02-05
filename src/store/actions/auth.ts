@@ -1,0 +1,47 @@
+
+import { API_BASE_URL } from 'react-native-dotenv'
+
+export enum AuthActions {
+  signUp = 'SIGNUP',
+  login = 'LOGIN'
+} 
+
+export const signUp = ({ firstName, lastName, email, password }) => {
+  return async dispatch => {
+    const response = await fetch(
+      `${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Contenty-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          firstName,
+          lastName
+        })
+      }
+    )
+    const data = await response.json();
+    dispatch({
+      type: AuthActions.signUp
+    })
+  }
+}
+
+export const login = ({ email, password }) => {
+  return async dispatch => {
+    const response = await fetch(
+      `${API_BASE_URL}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    )
+  }
+}
