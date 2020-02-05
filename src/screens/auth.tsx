@@ -1,55 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProfileForm } from '../components/profile-form';
-import { ThemeProvider, Text, SocialIcon } from 'react-native-elements';
+import { ThemeProvider, Text, SocialIcon, Button } from 'react-native-elements';
 import { styles } from '../assets/style';
 import { View } from 'react-native';
+import { useNavigation } from '../hooks/use-navigation';
 
-type AuthScrenState = {
-  isSignUp: boolean
-}
 
-export class AuthScreen extends React.Component<{}, AuthScrenState> {
-  static routeName = 'Auth'
+const AuthScreen = () => {
+  const routeName = 'Auth'
 
-  static navigationOptions = {
-    headerShown: false 
-  }
+  const navigation = useNavigation();
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSignUp: true
-    }
-  }
+  const [isSignUp, setSignUp] = useState(false);
 
-  render() {
-    return (
-      <ThemeProvider>
+  return (
+    <ThemeProvider>
+      <View
+        style={{ ...styles.container, backgroundColor: 'green' }}
+      >
         <View
-          style={{ ...styles.container, backgroundColor: 'green' }}
+          style={{ backgroundColor: 'orange', ...styles.banner }}
         >
-          <View
-            style={{ backgroundColor: 'orange', ...styles.banner }}
-          >
-            <Text>
-              {
-                this.state.isSignUp ? 'Crie sua Conta' : 'Que bom te ver aqui!'
-              }
-            </Text>
-          </View>
-          <ProfileForm
-            signUp={this.state.isSignUp}
-            changeAction={() => this.setState({ isSignUp: !this.state.isSignUp })}
-          >
-            <SocialIcon
-              style={styles.marginVerticalMd}
-              type="facebook"
-              title="Continuar com Facebook"
-              button
-            />
-          </ProfileForm>
+          <Text>
+            {
+              isSignUp ? 'Crie sua Conta' : 'Que bom te ver aqui!'
+            }
+          </Text>
         </View>
-      </ThemeProvider>
-    )
-  }
+        <ProfileForm
+          signUp={isSignUp}
+        >
+          <SocialIcon
+            style={styles.marginVerticalMd}
+            type="facebook"
+            title="Continuar com Facebook"
+            button
+          />
+          <Button
+            type="clear"
+            title={isSignUp ? 'Já tenho uma conta' : 'Não tenho uma conta'}
+            onPress={() => setSignUp(!isSignUp)}
+          />
+        </ProfileForm>
+      </View>
+    </ThemeProvider>
+  )
 }
+
+AuthScreen.navigationOptions = () => ({
+  headerShown: false
+})
+
+export { AuthScreen };
