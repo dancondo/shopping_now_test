@@ -2,9 +2,10 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { HomeScreen } from './src/screens/home';
-import { enableScreens } from 'react-native-screens';
 import { AuthScreen } from './src/screens/auth';
+import { HomeScreen } from './src/screens/home';
+import { ProfileScreen } from './src/screens/profile';
+import { enableScreens } from 'react-native-screens';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { authReducer } from './src/store/reducers/auth';
 import { Provider } from 'react-redux';
@@ -25,6 +26,9 @@ const AuthNavigation = createStackNavigator({
 const AppNavigation = createStackNavigator({
   Home: {
     screen: HomeScreen
+  },
+  Profile: {
+    screen: ProfileScreen
   }
 })
 
