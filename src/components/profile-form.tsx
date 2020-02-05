@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import { styles } from '../assets/style';
 import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 type ProfileFormProps = {
   signUp: boolean,
@@ -16,17 +18,22 @@ type ProfileFormProps = {
 
 export const ProfileForm = (props: ProfileFormProps) => {
 
+  const dispatch = useDispatch()
+
   const formik = useFormik({
-   initialValues: {
-     firstName: props.firstName ? props.firstName : '',
-     lastName: props.lastName ? props.lastName : '',
-     email: props.email ? props.email : '',
-     password: props.password ? props.firstName : ''
-   },
-   onSubmit: values => {
-     console.log(values)
-   }
+    initialValues: {
+      firstName: props.firstName ? props.firstName : '',
+      lastName: props.lastName ? props.lastName : '',
+      email: props.email ? props.email : '',
+      password: props.password ? props.firstName : ''
+    },
+    onSubmit: async values => {
+      await dispatch(authActions.signUp(values))
+    }
   })
+
+
+
 
   return (
     <View
@@ -66,6 +73,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
           buttonStyle={styles.roundButton}
           containerStyle={{...styles.marginHorizontalMd, ...styles.marginVerticalMd}}
           title={props.signUp ? 'Cadastrar' : 'Login'}
+          onPress={formik.submitForm}
           raised
         />
         { props.children && props.children }
