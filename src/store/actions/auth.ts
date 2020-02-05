@@ -2,7 +2,8 @@
 import { API_BASE_URL } from 'react-native-dotenv'
 
 export enum AuthActions {
-  login = 'LOGIN'
+  login = 'LOGIN',
+  update = 'UPDATE'
 } 
 
 export const signUp = ({ firstName, lastName, email, password }) => {
@@ -51,6 +52,28 @@ export const login = ({ email, password }) => {
   }
 }
 
-export const update = ({}) => {
-  
+export const update = ({ firstName, lastName, email, password }) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(
+      `${API_BASE_URL}/users/me`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password
+        })
+      }
+    )
+    const data = await response.json();
+    dispatch({
+      type: AuthActions.login,
+      payload: data
+    })
+  }
 }
