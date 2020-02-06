@@ -2,7 +2,8 @@ import { API_BASE_URL } from 'react-native-dotenv'
 
 export enum AnimesActions {
   fetchAnimes = 'FETCH_ANIMES',
-  toggleLoading = 'TOGGLE_LOADING'
+  toggleLoading = 'TOGGLE_LOADING',
+  setFavorite = 'SET_FAVORITE'
 }
 
 export const fetchAnimes = (query: string) => {
@@ -29,6 +30,27 @@ export const fetchAnimes = (query: string) => {
     dispatch({
       type: AnimesActions.toggleLoading,
       payload: false
+    })
+  }
+}
+export const markAsFavorite = (animeId: string) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    await fetch(
+      `${API_BASE_URL}/animes/favorites`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          animeId
+        })
+      }
+    )
+    dispatch({
+      type: AnimesActions.setFavorite,
+      payload: animeId
     })
   }
 }
