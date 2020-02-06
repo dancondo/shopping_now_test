@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { AuthScreen } from './src/screens/auth';
 import { HomeScreen } from './src/screens/home';
 import { ProfileScreen } from './src/screens/profile';
+import { StartupScreen } from './src/screens/startup';
 import { enableScreens } from 'react-native-screens';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { authReducer } from './src/store/reducers/auth';
@@ -36,6 +37,7 @@ const AppNavigation = createStackNavigator({
 
 const Navigation = createAppContainer(
   createSwitchNavigator({
+    Startup: StartupScreen,
     Auth: AuthNavigation,
     App: AppNavigation
   })
