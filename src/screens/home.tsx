@@ -141,6 +141,7 @@ const HomeScreen = () => {
           </Header>
         <ScrollView
           contentContainerStyle={{
+            padding: 7,
             paddingTop: HEADER_SCROLL_DISTANCE
           }}
           onScroll={Animated.event(
@@ -161,15 +162,27 @@ const HomeScreen = () => {
                 <ActivityIndicator
                   size={40}
                 />
-              ) : animes ? animes.map(
-                anime => (
-                  <AnimeCard
-                    anime={anime}
-                    key={anime.id}
-                  />
+              ) : animes ? 
+                animes.lengh === 0 ?
+                (
+                  <View
+                   style={{ ...styles.justifyCenter, ...styles.alignCenter }}
+                  >
+                    <Text>Nenhum Tesultado Encontrado</Text>
+                  </View>
+                ) : animes.map(
+                  anime => (
+                    <AnimeCard
+                      anime={anime}
+                      key={anime.id}
+                    />
                 )
               ) : (
-                <Text>Procure por um Anime</Text>
+                <View
+                  style={{ ...styles.justifyCenter, ...styles.alignCenter }}
+                >
+                  <Text>Procure por um Anime</Text>
+                </View>
               )
             }
         </ScrollView>
