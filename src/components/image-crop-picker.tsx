@@ -13,28 +13,24 @@ export const ImageCropPicker = (props: ImagePickerProps) => {
 
   const camera = async () => {
     const image = await ImagePicker.openCamera({
-      compressImageQuality: 0.8,
       multiple: false,
-      width: 300,
-      height: 300,
-      cropping: true
-    }).catch(_e => {
-      return
-    });
-    image && props.setImage(image.path);
-  }
-
-  const galery = async () => {
-    const image = await ImagePicker.openPicker({
-      compressImageQuality: 0.8,
-      multiple: false,
-      cropping: true,
       width: 300,
       height: 300
     }).catch(_e => {
       return
     });
-    image && props.setImage(image.path);
+    image && props.setImage(image);
+  }
+
+  const galery = async () => {
+    const image = await ImagePicker.openPicker({
+      multiple: false,
+      width: 300,
+      height: 300
+    }).catch(_e => {
+      return
+    });
+    image && props.setImage(image);
   }
 
   const haddleClick = () => {
