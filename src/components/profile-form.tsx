@@ -25,9 +25,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     },
     onSubmit: async values => {
       setIsSubmitting(true);
-      if (!hasErrors) {
-        await props.onSubmit(values);
-      }
+      await props.onSubmit(values);
     }
   })
 
@@ -35,9 +33,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const hasErrors = (): boolean => {
-    return !!(emailErrors || firstNameErrors || lastNameErrors || passwordErrors)
-  }
 
   const emailErrors = (): string => {
     if (!isSubmitting)

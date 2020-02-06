@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { ProfileForm } from '../components/profile-form';
-import { ThemeProvider, Text, SocialIcon, Button } from 'react-native-elements';
+import { Text, SocialIcon, Button } from 'react-native-elements';
 import { styles } from '../assets/style';
-import { View, Dimensions, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '../hooks/use-navigation';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
-import { SafeAreaView, ScrollView } from 'react-navigation';
 import { ScrollableFullScreenContainer } from '../components/scrollable-full-screen-container';
 import { snackbarAsyncWrapper } from '../helpers/snackbar';
 
@@ -31,7 +30,9 @@ const AuthScreen = () => {
       <View
         style={styles.banner}
       >
-        <Text>
+        <Text
+          h4
+        >
           {
             isSignUp ? 'Crie sua Conta' : 'Que bom te ver aqui!'
           }
