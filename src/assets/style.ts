@@ -14,8 +14,14 @@ export const styles = StyleSheet.create({
   alignAround: {
     alignContent: 'space-around'
   },
+  alignCenter: {
+    alignItems: 'center'
+  },
   justifyAround: {
     justifyContent: 'space-around'
+  },
+  justifyCenter: {
+    justifyContent: 'center'
   },
   justifyBetween: {
     justifyContent: 'space-between'
