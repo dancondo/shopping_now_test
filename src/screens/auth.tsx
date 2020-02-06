@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import { SafeAreaView, ScrollView } from 'react-navigation';
 import { ScrollableFullScreenContainer } from '../components/scrollable-full-screen-container';
+import { snackbarAsyncWrapper } from '../helpers/snackbar';
 
 const AuthScreen = () => {
   const routeName = 'Auth'
@@ -18,9 +19,11 @@ const AuthScreen = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (values) => {
-    await dispatch(authActions[isSignUp ? 'signUp' : 'login'](values));
-    navigation.navigate('Home');
+  const onSubmit = (values) => {
+    snackbarAsyncWrapper(async () => {
+      await dispatch(authActions[isSignUp ? 'signUp' : 'login'](values))
+      navigation.navigate('Home');
+    });
   }
 
   return (
