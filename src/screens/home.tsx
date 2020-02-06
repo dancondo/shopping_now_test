@@ -22,7 +22,7 @@ const HomeScreen = () => {
 
 
   const HEADER_MAX_HEIGHT = 240;
-  const HEADER_MIN_HEIGHT = 80;
+  const HEADER_MIN_HEIGHT = 84;
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
   const screenWidth = Dimensions.get('screen').width
  
@@ -141,7 +141,7 @@ const HomeScreen = () => {
           </Header>
         <ScrollView
           contentContainerStyle={{
-            paddingTop: HEADER_MAX_HEIGHT
+            paddingTop: HEADER_SCROLL_DISTANCE
           }}
           onScroll={Animated.event(
             [{ nativeEvent: {
