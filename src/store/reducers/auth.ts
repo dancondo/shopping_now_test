@@ -7,7 +7,7 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AuthActions.login:
+    case AuthActions.setAuthData:
       return {
         token: action.payload.token,
         user: action.payload.user

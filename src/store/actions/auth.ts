@@ -2,7 +2,7 @@
 import { API_BASE_URL } from 'react-native-dotenv'
 
 export enum AuthActions {
-  login = 'LOGIN',
+  setAuthData = 'SET_AUTH_DATA',
   update = 'UPDATE'
 } 
 
@@ -24,7 +24,7 @@ export const signUp = ({ firstName, lastName, email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.login,
+      type: AuthActions.setAuthData,
       payload: data
     })
   }
@@ -46,7 +46,7 @@ export const login = ({ email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.login,
+      type: AuthActions.setAuthData,
       payload: data
     })
   }
@@ -72,8 +72,18 @@ export const update = ({ firstName, lastName, email, password }) => {
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.login,
+      type: AuthActions.setAuthData,
       payload: data
     })
   }
+}
+
+export const logout = () => {
+  return dispatch => ({
+    type: AuthActions.setAuthData,
+    payload: {
+      user: null,
+      token: null
+    }
+  })
 }
