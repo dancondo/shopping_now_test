@@ -5,54 +5,89 @@ import { createFormData } from '../../helpers/form-data';
 
 export enum AuthActions {
   setAuthData = 'SET_AUTH_DATA',
-  update = 'UPDATE'
+  update = 'UPDATE',
+  toggleLoading = 'TOGGLE_LOADING'
 } 
 
 export const signUp = ({ firstName, lastName, email, password }) => {
   return async dispatch => {
-    const response = await fetch(
-      `${API_BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          firstName,
-          lastName
+    try {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+      const response = await fetch(
+        `${API_BASE_URL}/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            password,
+            firstName,
+            lastName
+          })
+        }
+      )
+      const data = await response.json();
+      if (response.ok) {
+        data.user.password = password;
+        dispatch({
+          type: AuthActions.setAuthData,
+          payload: data
         })
+      } else {
+        const error = new Error();
+        error.message = data.error;
+        throw error;
       }
-    )
-    const data = await response.json();
-    data.user.password = password;
-    dispatch({
-      type: AuthActions.setAuthData,
-      payload: data
-    })
+    } catch (err) {
+      throw err;
+    } finally {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+    }
   }
 }
 
 export const login = ({ email, password }) => {
   return async dispatch => {
-    const response = await fetch(
-      `${API_BASE_URL}/auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password
+    try {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+      const response = await fetch(
+        `${API_BASE_URL}/auth`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            password
+          })
+        }
+      )
+      const data = await response.json();
+      if (response.ok) {
+        data.user.password = password;
+        dispatch({
+          type: AuthActions.setAuthData,
+          payload: data
         })
+      } else {
+        const error = new Error();
+        error.message = data.error;
+        throw error;
       }
-    )
-    const data = await response.json();
-    data.user.password = password;
-    dispatch({
-      type: AuthActions.setAuthData,
-      payload: data
-    })
+    } catch (err) {
+      throw err
+    } finally {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+    }
   }
 }
 
