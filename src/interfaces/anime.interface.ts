@@ -3,4 +3,5 @@ export interface Anime {
   title: string;
   imageUrl: string;
   synopsis: string;
+  favorite?: boolean;
 }
