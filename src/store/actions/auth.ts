@@ -1,5 +1,7 @@
 
 import { API_BASE_URL } from 'react-native-dotenv'
+import { User } from '../../interfaces/user.interface';
+import { createFormData } from '../../helpers/form-data';
 
 export enum AuthActions {
   setAuthData = 'SET_AUTH_DATA',
@@ -23,6 +25,7 @@ export const signUp = ({ firstName, lastName, email, password }) => {
       }
     )
     const data = await response.json();
+    data.user.password = password;
     dispatch({
       type: AuthActions.setAuthData,
       payload: data
@@ -45,6 +48,7 @@ export const login = ({ email, password }) => {
       }
     )
     const data = await response.json();
+    data.user.password = password;
     dispatch({
       type: AuthActions.setAuthData,
       payload: data
@@ -52,38 +56,38 @@ export const login = ({ email, password }) => {
   }
 }
 
-export const update = ({ firstName, lastName, email, password }) => {
+export const update = (user: User, image: any) => {
+
+  const body = createFormData({ body: user, image })
+
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     const response = await fetch(
       `${API_BASE_URL}/users/me`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password
-        })
+        body: body
       }
     )
     const data = await response.json();
     dispatch({
-      type: AuthActions.setAuthData,
-      payload: data
+      type: AuthActions.update,
+      payload: { ...data, password: user.password }
     })
   }
 }
 
 export const logout = () => {
-  return dispatch => ({
-    type: AuthActions.setAuthData,
-    payload: {
-      user: null,
-      token: null
-    }
-  })
+  return dispatch => {
+    dispatch({
+      type: AuthActions.setAuthData,
+      payload: {
+        user: null,
+        token: null
+      }
+    })
+  }
 }
