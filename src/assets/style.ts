@@ -21,15 +21,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   banner: {
-    minHeight: '30%',
+    minHeight: '33%',
     justifyContent: 'center',
     alignItems: 'center'
   },
   stretchContainer: {
-    minHeight: '50%',
     alignSelf: 'stretch',
     flex: 1,
-    backgroundColor: 'blue'
   },
   roundButton: {
     borderRadius: 28,

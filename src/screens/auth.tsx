@@ -26,7 +26,7 @@ const AuthScreen = () => {
   return (
     <ScrollableFullScreenContainer>
       <View
-        style={{ backgroundColor: 'orange', ...styles.banner }}
+        style={styles.banner}
       >
         <Text>
           {
