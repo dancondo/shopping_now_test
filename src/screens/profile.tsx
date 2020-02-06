@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, View } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, Button, Avatar, Text } from 'react-native-elements';
@@ -7,6 +7,7 @@ import * as authActions from '../store/actions/auth';
 import { useNavigation } from '../hooks/use-navigation';
 import { styles } from '../assets/style';
 import { ScrollableFullScreenContainer } from '../components/scrollable-full-screen-container';
+import { ImageCropPicker } from '../components/image-crop-picker';
 
 const ProfileScreen = () => {
   const routeName = 'Home'
@@ -16,6 +17,8 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
+
+  const [image, setImage] = useState('');
 
   const onSubmit = async (values) => {
     await dispatch(authActions.update(values));
@@ -34,21 +37,29 @@ const ProfileScreen = () => {
       <View
         style={styles.banner}
       >
-        <Avatar
-          rounded
-          icon={{ name: 'person' }}
-          size="xlarge"
-        />
+        { image ? (
+          <Avatar
+            rounded
+            source={{ uri: image }}
+            size="xlarge"
+          />
+        ) : (
+          <Avatar
+            rounded
+            icon={{ name: 'person' }}
+            size="xlarge"
+          />
+        )
+        
+        }
         <Text
           h4
         >
           { `${user.firstName} ${user.lastName}`}
         </Text>
-        <Button
-          titleStyle={styles.underline}
+        <ImageCropPicker
           title="trocar foto"
-          type="clear"
-          onPress={() => null}
+          setImage={setImage}
         />
       </View>
       <ProfileForm
