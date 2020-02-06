@@ -1,9 +1,10 @@
-import React, { ReactChild } from 'react';
+import React, { ReactChild, useReducer } from 'react';
 import { useFormik } from 'formik';
 import { styles } from '../assets/style';
 import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { User } from '../interfaces/user.interface'
+import { useSelector } from 'react-redux';
 
 type ProfileFormProps = {
   showExtraFields: boolean
@@ -26,6 +27,8 @@ export const ProfileForm = (props: ProfileFormProps) => {
       await props.onSubmit(values);
     }
   })
+
+  const loading = useSelector(state => state.auth.loading);
 
   return (
     <View
@@ -62,6 +65,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
       </View>
       <View>
         <Button
+          loading={loading}
           buttonStyle={styles.roundButton}
           containerStyle={{...styles.marginHorizontalMd, ...styles.marginVerticalMd}}
           title={props.actionName}
