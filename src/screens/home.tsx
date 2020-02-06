@@ -7,6 +7,7 @@ import { SearchFields } from '../components/search-field';
 import { AnimeCard } from '../components/anime-card';
 import { styles } from '../assets/style';
 import * as animesActions from '../store/actions/animes';
+import { snackbarAsyncWrapper } from '../helpers/snackbar';
 
 const HomeScreen = () => {
   const routeName = 'Home'
@@ -16,7 +17,9 @@ const HomeScreen = () => {
   const animes = useSelector(state => state.animes.animes);
   const loading = useSelector(state => state.animes.loading);
   const onSearch = (value: string) => {
-    dispatch(animesActions.fetchAnimes(value));
+    snackbarAsyncWrapper(async () => {
+      await dispatch(animesActions.fetchAnimes(value));
+    })
   }
 
 
@@ -132,12 +135,28 @@ const HomeScreen = () => {
                 style={{ fontSize: 21, color: 'white' }}
               >{user.firstName}</Text>
             </Animated.View>
-            <Icon
-              name="edit"
-              type='font-awesome'
-              color="white"
-              onPress={() => navigation.navigate('Profile')}
-            />
+            <View
+              style={{ ...styles.alignCenter, ...styles.justifyCenter, flexDirection: 'row' }}
+            >
+              <Icon
+                name="star"
+                color="white"
+              />
+              <Text
+                style={{
+                  color: 'white',
+                  marginRight: 7
+                }}
+              >
+                { user.favoritesCount }
+              </Text>
+              <Icon
+                name="edit"
+                type='font-awesome'
+                color="white"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
           </Header>
         <ScrollView
           contentContainerStyle={{
@@ -172,10 +191,12 @@ const HomeScreen = () => {
                   </View>
                 ) : animes.map(
                   anime => (
-                    <AnimeCard
-                      anime={anime}
-                      key={anime.id}
-                    />
+                    <React.Fragment>
+                      <AnimeCard
+                        anime={anime}
+                        key={anime.id}
+                      />
+                    </React.Fragment>
                 )
               ) : (
                 <View
