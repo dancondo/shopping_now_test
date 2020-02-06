@@ -191,12 +191,10 @@ const HomeScreen = () => {
                   </View>
                 ) : animes.map(
                   anime => (
-                    <React.Fragment>
-                      <AnimeCard
-                        anime={anime}
-                        key={anime.id}
-                      />
-                    </React.Fragment>
+                    <AnimeCard
+                      anime={anime}
+                      key={anime.id}
+                    />
                 )
               ) : (
                 <View
