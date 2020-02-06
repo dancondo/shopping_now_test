@@ -2,6 +2,7 @@
 import { API_BASE_URL } from 'react-native-dotenv'
 import { User } from '../../interfaces/user.interface';
 import { createFormData } from '../../helpers/form-data';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export enum AuthActions {
   setAuthData = 'SET_AUTH_DATA',
@@ -37,6 +38,7 @@ export const signUp = ({ firstName, lastName, email, password }) => {
           type: AuthActions.setAuthData,
           payload: data
         })
+        saveData(data.token)
       } else {
         const error = new Error();
         error.message = data.error;
@@ -76,6 +78,46 @@ export const login = ({ email, password }) => {
         dispatch({
           type: AuthActions.setAuthData,
           payload: data
+        })
+        saveData(data.token)
+      } else {
+        const error = new Error();
+        error.message = data.error;
+        throw error;
+      }
+    } catch (err) {
+      throw err
+    } finally {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+    }
+  }
+}
+
+export const fetchUserData = (token) => {
+  return async dispatch => {
+    try {
+      dispatch({
+        type: AuthActions.toggleLoading
+      })
+      const response = await fetch(
+        `${API_BASE_URL}/users/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        }
+      )
+      const data = await response.json();
+      if (response.ok) {
+        dispatch({
+          type: AuthActions.setAuthData,
+          payload: {
+            user: data,
+            token
+        }
         })
       } else {
         const error = new Error();
@@ -125,6 +167,7 @@ export const logout = () => {
         token: null
       }
     })
+    saveData(null);
   }
 }
 
@@ -135,4 +178,8 @@ export const updateFavorites = (val: number) => {
       payload: val
     })
   }
+}
+
+const saveData = (token) => {
+  AsyncStorage.setItem('@token', token)
 }
