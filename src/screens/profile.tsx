@@ -21,7 +21,7 @@ const ProfileScreen = () => {
   const [newImage, setNewImage] = useState(null);
 
   const onSubmit = async (values) => {
-    await dispatch(authActions.update(values, {
+    await dispatch(authActions.update(values, newImage && {
         name: newImage.path.split('/').pop(),
         type: newImage.mime,
         uri: Platform.OS === "android" ? newImage.path : newImage.path.replace("file://", "")

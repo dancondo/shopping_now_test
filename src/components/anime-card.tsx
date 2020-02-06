@@ -20,7 +20,7 @@ export const AnimeCard = ({ anime }: AnimeCardProps) => {
     snackbarAsyncWrapper(async () => {
       await dispatch(animesActions.markAsFavorite(anime.id))
       await dispatch(authActions.updateFavorites(anime.favorite ? 1 : -1))
-    })
+    }, 'Atualizado com Sucesso')
   }
 
   return (
