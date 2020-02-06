@@ -20,12 +20,9 @@ export const ProfileForm = (props: ProfileFormProps) => {
       firstName: props.user ? props.user.firstName : '',
       lastName: props.user ? props.user.lastName : '',
       email: props.user ? props.user.email : '',
-      password: props.user ? props.user.firstName : ''
+      password: props.user ? props.user.password : ''
     },
     onSubmit: async values => {
-      if (props.user) {
-        return
-      }
       await props.onSubmit(values);
     }
   })
