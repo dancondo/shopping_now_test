@@ -22,6 +22,11 @@ export const ProfileScreen = () => {
     navigation.navigate('Home');
   }
 
+  const logout = () => {
+    dispatch(authActions.logout);
+    navigation.navigate('Auth');
+  }
+
   return (
     <ScrollableFullScreenContainer
       hasHeader
@@ -44,6 +49,7 @@ export const ProfileScreen = () => {
         <Button
           title="Sair"
           type="clear"
+          onPress={logout}
         />  
       </ProfileForm>
     </ScrollableFullScreenContainer>
