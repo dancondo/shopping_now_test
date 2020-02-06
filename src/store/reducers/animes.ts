@@ -17,7 +17,18 @@ export const animesReducer = (state = initialState, action) => {
         loading: action.payload,
         animes: state.animes
       }
-      default:
-        return state;
+    case AnimesActions.setFavorite:
+      const animes = state.animes.map(anime => {
+        if (anime.id == action.payload) {
+          anime.favorite = !anime.favorite
+        }
+        return anime
+      })
+      return {
+        loading: state.loading,
+        animes: animes
+      }
+    default:
+      return state;
   }
 }
