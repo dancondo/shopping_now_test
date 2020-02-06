@@ -32,5 +32,8 @@ export const styles = StyleSheet.create({
   roundButton: {
     borderRadius: 28,
     height: 52,
+  },
+  underline: {
+    textDecorationLine: 'underline'
   }
 })

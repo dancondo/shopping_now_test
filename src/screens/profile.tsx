@@ -1,14 +1,14 @@
 import React from 'react';
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider, Button, Avatar } from 'react-native-elements';
+import { ThemeProvider, Button, Avatar, Text } from 'react-native-elements';
 import { ProfileForm } from '../components/profile-form';
 import * as authActions from '../store/actions/auth';
 import { useNavigation } from '../hooks/use-navigation';
 import { styles } from '../assets/style';
 import { ScrollableFullScreenContainer } from '../components/scrollable-full-screen-container';
 
-export const ProfileScreen = () => {
+const ProfileScreen = () => {
   const routeName = 'Home'
 
   const user = useSelector(state => state.auth.user);
@@ -39,6 +39,17 @@ export const ProfileScreen = () => {
           icon={{ name: 'person' }}
           size="xlarge"
         />
+        <Text
+          h4
+        >
+          { `${user.firstName} ${user.lastName}`}
+        </Text>
+        <Button
+          titleStyle={styles.underline}
+          title="trocar foto"
+          type="clear"
+          onPress={() => null}
+        />
       </View>
       <ProfileForm
         actionName="Salvar"
@@ -47,6 +58,7 @@ export const ProfileScreen = () => {
         user={user}
       >
         <Button
+          titleStyle={styles.underline}
           title="Sair"
           type="clear"
           onPress={logout}
@@ -55,3 +67,14 @@ export const ProfileScreen = () => {
     </ScrollableFullScreenContainer>
   )
 }
+
+ProfileScreen.navigationOptions = () => ({
+  title: '',
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0,
+    backgroundColor: 'transparent'
+  }
+})
+
+export { ProfileScreen }
