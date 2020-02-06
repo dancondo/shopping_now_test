@@ -24,6 +24,15 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: !state.loading
       }
+    case AuthActions.updateFavorites: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favoritesCount: state.user.favoritesCount += action.payload
+        }
+      }
+    }
     default:
       return state;
   }

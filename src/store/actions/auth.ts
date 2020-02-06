@@ -6,7 +6,8 @@ import { createFormData } from '../../helpers/form-data';
 export enum AuthActions {
   setAuthData = 'SET_AUTH_DATA',
   update = 'UPDATE',
-  toggleLoading = 'TOGGLE_LOADING'
+  toggleLoading = 'TOGGLE_LOADING',
+  updateFavorites = 'UPDATE_FAVORITES'
 } 
 
 export const signUp = ({ firstName, lastName, email, password }) => {
@@ -123,6 +124,15 @@ export const logout = () => {
         user: null,
         token: null
       }
+    })
+  }
+}
+
+export const updateFavorites = (val: number) => {
+  return dispatch => {
+    dispatch({
+      type: AuthActions.updateFavorites,
+      payload: val
     })
   }
 }
