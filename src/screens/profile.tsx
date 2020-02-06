@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Platform } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, Button, Avatar, Text } from 'react-native-elements';
 import { ProfileForm } from '../components/profile-form';
@@ -18,10 +18,15 @@ const ProfileScreen = () => {
 
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState('');
+  const [newImage, setNewImage] = useState(null);
 
   const onSubmit = async (values) => {
-    await dispatch(authActions.update(values));
+    await dispatch(authActions.update(values, {
+        name: newImage.path.split('/').pop(),
+        type: newImage.mime,
+        uri: Platform.OS === "android" ? newImage.path : newImage.path.replace("file://", "")
+      }  
+    ));
     navigation.navigate('Home');
   }
 
@@ -37,10 +42,16 @@ const ProfileScreen = () => {
       <View
         style={styles.banner}
       >
-        { image ? (
+        { newImage ? (
           <Avatar
             rounded
-            source={{ uri: image }}
+            source={{ uri: newImage.path }}
+            size="xlarge"
+          />
+        ) : user.imageUrl ? (
+          <Avatar
+            rounded
+            source={{ uri: user.imageUrl }}
             size="xlarge"
           />
         ) : (
@@ -59,7 +70,7 @@ const ProfileScreen = () => {
         </Text>
         <ImageCropPicker
           title="trocar foto"
-          setImage={setImage}
+          setImage={setNewImage}
         />
       </View>
       <ProfileForm
